@@ -1,0 +1,42 @@
+# version: '3.7'
+services:
+  app:
+    cpus: '.3'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      mysqldb:
+        condition: service_healthy
+    environment:
+      - DB_HOST=mysqldb
+      - DB_PORT=3307
+      - DB_NAME=rentitout
+      - DB_USERNAME=root
+      - DB_PASSWORD=rentitout
+    networks:
+      - nodejs-mysql-network
+  mysqldb:
+    cpus: '.3'
+    image: mysql:8.0.33
+    ports:
+      - 3307:3306
+    environment:
+      - MYSQL_DATABASE=rentitout
+      - MYSQL_ROOT_PASSWORD=rentitout
+    # volumes:
+    #   - mysql-data:/var/lib/mysql
+    networks:
+      - nodejs-mysql-network
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      retries: 10
+      interval: 3s
+      timeout: 30s
+# volumes:
+#   mysql-data:
+networks:
+  nodejs-mysql-network:
+    name: nodejs-mysql-network
