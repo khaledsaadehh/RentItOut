@@ -40,11 +40,9 @@ jobs:
           npm install -g nodemon
           npm install
 
-      - name: Build Docker image
-        run: docker build -t express-app .
 
-      - name: Run Docker Compose
-        run: docker-compose up -d
+      - name: Build & Run Docker Compose
+        run: docker-compose up -d --build
 
       - name: Wait for MySQL to be ready
         run: |
@@ -55,7 +53,7 @@ jobs:
 
       - name: Run tests
         run: |
-          docker exec express-app npm test  # Make sure you have a test script in package.json
+          docker exec logs rentitproject-app-1 npm test  # Make sure you have a test script in package.json
 
       - name: Shut down Docker Compose
         run: docker-compose down
