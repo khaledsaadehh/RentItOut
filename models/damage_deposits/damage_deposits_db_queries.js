@@ -1,4 +1,5 @@
 const db = require('../../utils/db-connection');
+const logger = require("../../utils/logger");
 
 const DamageDeposit = {};
 
@@ -6,10 +7,11 @@ const DamageDeposit = {};
 DamageDeposit.addDamageDeposit = (newDamageDeposit, result) => {
     db.query('INSERT INTO damage_deposits SET ?', newDamageDeposit, (err, res) => {
         if (err) {
-            console.log(err);
+            logger.error(`Error adding DamageDeposit: ${err.message}`, { error: err });
             result(err, null);
             return;
         }
+        logger.info('New DamageDeposit added successfully', { newDamageDeposit });
         result(null, { ...newDamageDeposit });
     });
 };
@@ -19,10 +21,11 @@ DamageDeposit.addDamageDeposit = (newDamageDeposit, result) => {
 DamageDeposit.getDamageDepositsList = (result) => {
     db.query('SELECT * FROM damage_deposits', (err, res) => {
         if (err) {
-            console.log(err);
+            logger.error(`Error fetching DamageDeposits list: ${err.message}`, { error: err });
             result(err, null);
             return;
         }
+        logger.info('Fetched DamageDeposits list successfully');
         result(null, res);
     });
 };
@@ -32,10 +35,11 @@ DamageDeposit.getDamageDepositsList = (result) => {
 DamageDeposit.getDamageDepositById = (DamageDepositID, result) => {
     db.query('SELECT * FROM damage_deposits WHERE id = ?', [DamageDepositID], (err, res) => {
         if (err) {
-            console.log(err);
+            logger.error(`Error fetching DamageDeposit with ID ${DamageDepositID}: ${err.message}`, { error: err });
             result(err, null);
             return;
         }
+        logger.info(`Fetched DamageDeposit by ID ${DamageDepositID} successfully`);
         result(null, res);
     });
 };
@@ -45,11 +49,12 @@ DamageDeposit.getDamageDepositById = (DamageDepositID, result) => {
 DamageDeposit.updateDamageDeposit = (DamageDepositID, Data, result) => {
         db.query('SELECT * FROM damage_deposits WHERE id = ?', [DamageDepositID], (err, res) => {
         if (err) {
-            console.log(err);
+            logger.error(`Error finding DamageDeposit with ID ${DamageDepositID} for update: ${err.message}`, { error: err });
             result(err, null);
             return;
         }
         if (res.length === 0) {
+            logger.warn(`DamageDeposit with ID ${DamageDepositID} not found for update`);
             result({ kind: "not_found" }, null);
             return;
         }
@@ -70,11 +75,11 @@ DamageDeposit.updateDamageDeposit = (DamageDepositID, Data, result) => {
         
         db.query(updateQuery, updateData, (err, res) => {
             if (err) {
-                console.error('Error updating record:', err);
+                logger.error(`Error updating DamageDeposit with ID ${DamageDepositID}: ${err.message}`, { error: err });
                 result(err, null);
                 return;
             }
-            console.log('Record updated successfully');
+            logger.info(`Updated DamageDeposit with ID ${DamageDepositID} successfully`, { Data });
             result(null, res);
         });
     });
@@ -84,10 +89,11 @@ DamageDeposit.updateDamageDeposit = (DamageDepositID, Data, result) => {
 DamageDeposit.deleteDamageDeposit = (DamageDepositID, result) => {
     db.query('DELETE FROM damage_deposits WHERE id = ?', [DamageDepositID], (err, res) => {
         if (err) {
-            console.log(err);
+            logger.error(`Error deleting DamageDeposit with ID ${DamageDepositID}: ${err.message}`, { error: err });
             result(err, null);
             return;
         }
+        logger.info(`Deleted DamageDeposit with ID ${DamageDepositID} successfully`);
         result(null, res);
     });
 };

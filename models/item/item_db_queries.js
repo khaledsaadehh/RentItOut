@@ -1,4 +1,6 @@
 const db = require('../../utils/db-connection');
+const logger = require("../../utils/logger");
+
 
 const Item = {};
 
@@ -6,10 +8,11 @@ const Item = {};
 Item.addItem = (newItem, result) => {
     db.query('INSERT INTO items SET ?', newItem, (err, res) => {
         if (err) {
-            console.log(err);
+            logger.error(`Error adding Item: ${err.message}`, { error: err });
             result(err, null);
             return;
         }
+        logger.info('New Item added successfully', { newItem });
         result(null, { ...newItem });
     });
 };
@@ -19,10 +22,11 @@ Item.addItem = (newItem, result) => {
 Item.getItemsList = (result) => {
     db.query('SELECT * FROM items', (err, res) => {
         if (err) {
-            console.log(err);
+            logger.error(`Error fetching Items list: ${err.message}`, { error: err });
             result(err, null);
             return;
         }
+        logger.info('Fetched Items list successfully');
         result(null, res);
     });
 };
@@ -32,10 +36,11 @@ Item.getItemsList = (result) => {
 Item.getItemById = (ItemID, result) => {
     db.query('SELECT * FROM items WHERE id = ?', [ItemID], (err, res) => {
         if (err) {
-            console.log(err);
+            logger.error(`Error fetching Item with ID ${ItemID}: ${err.message}`, { error: err });
             result(err, null);
             return;
         }
+        logger.info(`Fetched Item by ID ${ItemID} successfully`);
         result(null, res);
     });
 };
@@ -45,11 +50,12 @@ Item.getItemById = (ItemID, result) => {
 Item.updateItem = (ItemID, Data, result) => {
         db.query('SELECT * FROM items WHERE id = ?', [ItemID], (err, res) => {
         if (err) {
-            console.log(err);
+            logger.error(`Error finding Item with ID ${ItemID} for update: ${err.message}`, { error: err });
             result(err, null);
             return;
         }
         if (res.length === 0) {
+            logger.warn(`Item with ID ${ItemID} not found for update`);
             result({ kind: "not_found" }, null);
             return;
         }
@@ -70,11 +76,11 @@ Item.updateItem = (ItemID, Data, result) => {
         
         db.query(updateQuery, updateData, (err, res) => {
             if (err) {
-                console.error('Error updating record:', err);
+                logger.error(`Error updating Item with ID ${ItemID}: ${err.message}`, { error: err });
                 result(err, null);
                 return;
             }
-            console.log('Record updated successfully');
+            logger.info(`Updated Item with ID ${ItemID} successfully`, { Data });
             result(null, res);
         });
     });
@@ -84,10 +90,11 @@ Item.updateItem = (ItemID, Data, result) => {
 Item.deleteItem = (ItemID, result) => {
     db.query('DELETE FROM items WHERE id = ?', [ItemID], (err, res) => {
         if (err) {
-            console.log(err);
+            logger.error(`Error deleting Item with ID ${ItemID}: ${err.message}`, { error: err });
             result(err, null);
             return;
         }
+        logger.info(`Deleted Item with ID ${ItemID} successfully`);
         result(null, res);
     });
 };

@@ -1,4 +1,5 @@
 const db = require('../../utils/db-connection');
+const logger = require("../../utils/logger");
 
 const InsurancePlan = {};
 
@@ -6,10 +7,11 @@ const InsurancePlan = {};
 InsurancePlan.addInsurancePlan = (newInsurancePlan, result) => {
     db.query('INSERT INTO insurance_plans SET ?', newInsurancePlan, (err, res) => {
         if (err) {
-            console.log(err);
+            logger.error(`Error adding InsurancePlan: ${err.message}`, { error: err });
             result(err, null);
             return;
         }
+        logger.info('New InsurancePlan added successfully', { newInsurancePlan });
         result(null, { ...newInsurancePlan });
     });
 };
@@ -19,10 +21,11 @@ InsurancePlan.addInsurancePlan = (newInsurancePlan, result) => {
 InsurancePlan.getInsurancePlansList = (result) => {
     db.query('SELECT * FROM insurance_plans', (err, res) => {
         if (err) {
-            console.log(err);
+            logger.error(`Error fetching InsurancePlans list: ${err.message}`, { error: err });
             result(err, null);
             return;
         }
+        logger.info('Fetched InsurancePlans list successfully');
         result(null, res);
     });
 };
@@ -32,10 +35,11 @@ InsurancePlan.getInsurancePlansList = (result) => {
 InsurancePlan.getInsurancePlanById = (InsurancePlanID, result) => {
     db.query('SELECT * FROM insurance_plans WHERE id = ?', [InsurancePlanID], (err, res) => {
         if (err) {
-            console.log(err);
+            logger.error(`Error fetching InsurancePlan with ID ${InsurancePlanID}: ${err.message}`, { error: err });
             result(err, null);
             return;
         }
+        logger.info(`Fetched InsurancePlan by ID ${InsurancePlanID} successfully`);
         result(null, res);
     });
 };
@@ -45,11 +49,12 @@ InsurancePlan.getInsurancePlanById = (InsurancePlanID, result) => {
 InsurancePlan.updateInsurancePlan = (InsurancePlanID, Data, result) => {
         db.query('SELECT * FROM insurance_plans WHERE id = ?', [InsurancePlanID], (err, res) => {
         if (err) {
-            console.log(err);
+            logger.error(`Error finding InsurancePlan with ID ${InsurancePlanID} for update: ${err.message}`, { error: err });
             result(err, null);
             return;
         }
         if (res.length === 0) {
+            logger.warn(`InsurancePlan with ID ${InsurancePlanID} not found for update`);
             result({ kind: "not_found" }, null);
             return;
         }
@@ -70,11 +75,11 @@ InsurancePlan.updateInsurancePlan = (InsurancePlanID, Data, result) => {
         
         db.query(updateQuery, updateData, (err, res) => {
             if (err) {
-                console.error('Error updating record:', err);
+                logger.error(`Error updating InsurancePlan with ID ${InsurancePlanID}: ${err.message}`, { error: err });
                 result(err, null);
                 return;
             }
-            console.log('Record updated successfully');
+            logger.info(`Updated InsurancePlan with ID ${InsurancePlanID} successfully`, { Data });
             result(null, res);
         });
     });
@@ -84,10 +89,11 @@ InsurancePlan.updateInsurancePlan = (InsurancePlanID, Data, result) => {
 InsurancePlan.deleteInsurancePlan = (InsurancePlanID, result) => {
     db.query('DELETE FROM insurance_plans WHERE id = ?', [InsurancePlanID], (err, res) => {
         if (err) {
-            console.log(err);
+            logger.error(`Error deleting InsurancePlan with ID ${InsurancePlanID}: ${err.message}`, { error: err });
             result(err, null);
             return;
         }
+        logger.info(`Deleted InsurancePlan with ID ${InsurancePlanID} successfully`);
         result(null, res);
     });
 };
