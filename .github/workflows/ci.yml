@@ -61,11 +61,15 @@ jobs:
         if: always()
         run: docker-compose down
 
-      - name: Upload Docker Image to GitHub Container Registry
+      - name: Upload Docker Image to Docker Hub
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: docker/build-push-action@v4
         with:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ github.repository }}:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/rentitproject:latest
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
