@@ -57,6 +57,12 @@ jobs:
             sleep 1
           done
 
+      - name: List running Docker containers
+        run: |
+          docker ps --format "{{.Names}}" > container_names.txt
+          cat container_names.txt  # This will print the container names from the file
+
+
       - name: Run tests
         run: |
           docker exec rentitout-app-1 npm test  # Make sure you have a test script in package.json
