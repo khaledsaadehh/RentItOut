@@ -1,0 +1,61 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main  # Change this to your default branch if different
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      mysqldb:
+        image: mysql:8.0.33
+        env:
+          MYSQL_ROOT_PASSWORD: rentitout
+          MYSQL_DATABASE: rentitout
+        ports:
+          - 3307:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          npm install -g nodemon
+          npm install
+
+      - name: Build Docker image
+        run: docker build -t express-app .
+
+      - name: Run Docker Compose
+        run: docker-compose up -d
+
+      - name: Wait for MySQL to be ready
+        run: |
+          echo "Waiting for MySQL to be ready..."
+          while ! mysql -h127.0.0.1 -uroot -prentitout -e "SELECT 1"; do
+            sleep 1
+          done
+
+      - name: Run tests
+        run: |
+          docker exec express-app npm test  # Make sure you have a test script in package.json
+
+      - name: Shut down Docker Compose
+        run: docker-compose down
