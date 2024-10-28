@@ -1,0 +1,1818 @@
+{
+	"info": {
+		"_postman_id": "7bce7e2c-a1a2-4d5f-8049-1703811962f7",
+		"name": "RentItOut - Advanced Software Engineering Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39300255"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiS2hhbGVkIiwicGhvbmVfbnVtYmVyIjoiMDU2NDIzNDEyMyIsImlzX3ZlcmlmaWVkIjoxLCJhZGRyZXNzIjoiTmFibHVzIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMwMTE0ODg0LCJleHAiOjE3MzAxMTg0ODR9.GeOoDsHEfPfkgXAnZVjioF0AgZsZchFhaoz1eLhttG0",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/users",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiS2hhbGVkIiwicGhvbmVfbnVtYmVyIjoiMDU2NDIzNDEyMyIsImlzX3ZlcmlmaWVkIjoxLCJhZGRyZXNzIjoiTmFibHVzIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMwMTE0ODg0LCJleHAiOjE3MzAxMTg0ODR9.GeOoDsHEfPfkgXAnZVjioF0AgZsZchFhaoz1eLhttG0",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/user/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Username\": \"Khaled\",\r\n    \"Email\": \"khaled.saadeh.2017@gmail.com\",\r\n    \"phoneNumber\": \"0564234123\",\r\n    \"address\": \"Nablus\",\r\n    \"Password\": \"123456\",\r\n    \"isVerified\": 1,\r\n    \"Role\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Osama\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/user/2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"user",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/user/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"khaled.saadeh.2017@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "users-by-name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/users-list-by-name/Bob Smith",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"users-list-by-name",
+								"Bob Smith"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "users-by-email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/users-list-by-email/charlie.brown@example.com",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"users-list-by-email",
+								"charlie.brown@example.com"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Item",
+			"item": [
+				{
+					"name": "item",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"title\": \"Car\",\r\n        \"description\": \"The Best sport car.\",\r\n        \"category\": \"Sports\",\r\n        \"rental_price\": \"150\",\r\n        \"available_from\": \"2024-11-01\",\r\n        \"available_until\": \"2024-12-31\",\r\n        \"user_id\": 1,\r\n        \"status\": \"Fault\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/item",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"item"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "item",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/item/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"item",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "items",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "aut",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiS2hhbGVkIiwicGhvbmVfbnVtYmVyIjoiMDU2NDIzNDEyMyIsImlzX3ZlcmlmaWVkIjoxLCJhZGRyZXNzIjoiTmFibHVzIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzMwMTE0ODg0LCJleHAiOjE3MzAxMTg0ODR9.GeOoDsHEfPfkgXAnZVjioF0AgZsZchFhaoz1eLhttG0",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/items",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"items"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "item",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Donkey\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/item/16",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"item",
+								"16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "item",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/item/16",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"item",
+								"16"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "logistic",
+			"item": [
+				{
+					"name": "logistic",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rental_id\": 15,\r\n    \"delivery_address\": \"AAAAAAAAAAAAAA\",\r\n    \"pickup_date\": \"2024-10-23\",\r\n    \"delivery_status\": \"Scheduled\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/logistic",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"logistic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logistic",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/logistic/16",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"logistic",
+								"16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logistics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/logistics",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"logistics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logistic",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"delivery_address\": \"BBBBBBBBBBB\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/logistic/16",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"logistic",
+								"16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logistic",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/logistic/16",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"logistic",
+								"16"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "payment",
+			"item": [
+				{
+					"name": "payment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rental_id\": 4,\r\n    \"payment_date\": \"2024-06-02\",\r\n    \"amount\": \"15050\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/payment",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"payment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "payment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/payment/16",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"payment",
+								"16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "payments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/payments",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"payments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "payment",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": \"20020\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/payment/16",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"payment",
+								"16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "payment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/payment/16",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"payment",
+								"16"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "rental",
+			"item": [
+				{
+					"name": "rental",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"item_id\": 1,\r\n    \"user_id\": 2,\r\n    \"rental_start_date\": \"2024-06-01\",\r\n    \"rental_end_date\": \"2024-06-10\",\r\n    \"total_price\": \"170\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/rental",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"rental"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "rental",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/rental/16",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"rental",
+								"16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "rentals",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/rentals",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"rentals"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "rental",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"total_price\": \"1809\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/rental/16",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"rental",
+								"16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "rental",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/rental/16",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"rental",
+								"16"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "review",
+			"item": [
+				{
+					"name": "review",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"item_id\": 1,\r\n    \"user_id\": 2,\r\n    \"rating\": 3,\r\n    \"comment\": \"WWWWWWWWWWWWWWWWWWWWWW\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/review",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"review"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "review",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/review/16",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"review",
+								"16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reviews",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/reviews",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "review",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rating\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/review/16",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"review",
+								"16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "review",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/review/16",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"review",
+								"16"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "transaction-fees",
+			"item": [
+				{
+					"name": "transaction-fee",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"rental_id\": 1,\r\n        \"commission\": \"60\",\r\n        \"service_fee\": \"15\",\r\n        \"total_fee\": \"556\",\r\n        \"date\": \"2024-03-01\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/transaction-fee",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"transaction-fee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "transaction-fee",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/transaction-fee/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"transaction-fee",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "transaction-fees",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/transaction-fees",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"transaction-fees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "transaction-fee",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"commission\": \"51\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/transaction-fee/4",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"transaction-fee",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "transaction-fee",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/transaction-fee/5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"transaction-fee",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "damage-deposits",
+			"item": [
+				{
+					"name": "damage-deposit",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rental_id\": 1,\r\n    \"desposit_amount\": \"160\",\r\n    \"is_refund\": 1,\r\n    \"refund_date\": \"2024-03-11\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/damage-deposit",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"damage-deposit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "damage-deposit",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/damage-deposit/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"damage-deposit",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "damage-deposits",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/damage-deposits",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"damage-deposits"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "damage-deposit",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rental_id\": 3,\r\n    \"desposit_amount\": \"120\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/damage-deposit/6",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"damage-deposit",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "damage-deposit",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/damage-deposit/6",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"damage-deposit",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "insurance-plans",
+			"item": [
+				{
+					"name": "insurance-plan",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Theft\",\r\n    \"coverage_details\": \"Covers theftxxxxxxx\",\r\n    \"premium\": \"35\",\r\n    \"duration_days\": 35\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/insurance-plan",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"insurance-plan"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "insurance-plan",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/insurance-plan/4",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"insurance-plan",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "insurance-plans",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/insurance-plans",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"insurance-plans"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "insurance-plan",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"duration_days\": 37\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/insurance-plan/4",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"insurance-plan",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "insurance-plan",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/insurance-plan/4",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"insurance-plan",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "rental-insurance",
+			"item": [
+				{
+					"name": "rental-insurance",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rental_id\": 1,\r\n    \"insurance_id\": 1,\r\n    \"start_date\": \"2024-03-04\",\r\n    \"end_date\": \"2024-03-11\",\r\n    \"status\": \"active\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/rental-insurance",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"rental-insurance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "rental-insurance",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/rental-insurance/5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"rental-insurance",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "rental-insurances",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/rental-insurances",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"rental-insurances"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "rental-insurance",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"inactive\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/rental-insurance/5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"rental-insurance",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "rental-insurance",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/rental-insurance/5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"rental-insurance",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "recommendations",
+			"item": [
+				{
+					"name": "recommendation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": 1,\r\n    \"item_id\": 4,\r\n    \"recommendation_reason\": \"Good for indoor activities.\",\r\n    \"created_at\": \"2024-10-29\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/recommendation",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"recommendation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "recommendation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/recommendation/5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"recommendation",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "recommendations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/recommendations",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"recommendations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "recommendation",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"created_at\": \"2024-10-30\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/recommendation/5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"recommendation",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "recommendation",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/recommendation/5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"recommendation",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ratings",
+			"item": [
+				{
+					"name": "rating",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"item_id\": 4,\r\n    \"reviewed_user_id\": 3,\r\n    \"reviewing_user_id\": 1,\r\n    \"rating\": 5,\r\n    \"comment\": \"Not bad \",\r\n    \"created_at\": \"2024-10-20\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/rating",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"rating"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "rating",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/rating/5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"rating",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ratings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/ratings",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"ratings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "rating",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"comment\": \"Not Good \"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/rating/5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"rating",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "rating",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/rating/5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"rating",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "recent-views",
+			"item": [
+				{
+					"name": "recent-view",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": 3,\r\n    \"item_id\": 4,\r\n    \"viewed_at\": \"2024-10-29\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/recent-view",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"recent-view"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "recent-view",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/recent-view/5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"recent-view",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "recent-views",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/recent-views",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"recent-views"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "recent-view",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"viewed_at\": \"2024-10-18\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/recent-view/5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"recent-view",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "recent-view",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiS2hhbGVkIiwicGhvbmVfbnVtYmVyIjoiMDU2NDIzNDEyMyIsImlzX3ZlcmlmaWVkIjoxLCJhZGRyZXNzIjoiTmFibHVzIiwicm9sZSI6IkFkbWluIiwiaWF0IjoxNzMwMTA5ODM1LCJleHAiOjE3MzAxMTM0MzV9.R3OMwLoFHhfrcQRAkbZZ0gbjUBgQMDtrRJJAqc-ygTM",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/RentItOut/api/v1/recent-view/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"RentItOut",
+								"api",
+								"v1",
+								"recent-view",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
