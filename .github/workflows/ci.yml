@@ -57,10 +57,11 @@ jobs:
             sleep 1
           done
 
-      - name: List running Docker containers
+      - name: List all running Docker containers
         run: |
-          docker ps --format "{{.Names}}" > container_names.txt
-          cat container_names.txt  # This will print the container names from the file
+          docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" > running_containers.txt
+          cat running_containers.txt  # Print all running containers with ID, Name, and Status
+
 
       - name: Wait for rentitout-app-1 container to start
         run: |
@@ -70,7 +71,12 @@ jobs:
             sleep 2
           done
           echo "Container rentitout-app-1 is now running."
-
+          
+      - name: List all running Docker containers
+        run: |
+          docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" > running_containers.txt
+          cat running_containers.txt  # Print all running containers with ID, Name, and Status
+      
       - name: Run tests
         run: |
           docker exec rentitout-app-1 npm test  # Make sure you have a test script in package.json
