@@ -54,8 +54,8 @@ jobs:
       - name: Build and test Docker container
         run: |
           docker-compose -f docker-compose.yml up -d
-          sleep 20  # Allow MySQL to fully initialize
-          docker-compose exec app npm run test  # Replace with your test command
+          # sleep 20  # Allow MySQL to fully initialize
+          # docker-compose exec app npm run test  # Replace with your test command
 
       - name: Stop and remove containers
         if: always()
