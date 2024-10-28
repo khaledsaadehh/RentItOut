@@ -19,7 +19,7 @@ jobs:
           MYSQL_DATABASE: rentitout
           MYSQL_ROOT_PASSWORD: rentitout
         ports:
-          - 3308:3306
+          - 3307:3306
         options: >-
           --health-cmd="mysqladmin ping -h localhost"
           --health-interval=10s
@@ -45,6 +45,11 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
 
       - name: Build and test Docker container
         run: |
