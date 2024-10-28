@@ -12,20 +12,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    services:
-      mysqldb:
-        image: mysql:8.0.33
-        env:
-          MYSQL_ROOT_PASSWORD: rentitout
-          MYSQL_DATABASE: rentitout
-        ports:
-          - 3308:3306
-        options: >-
-          --health-cmd="mysqladmin ping -h localhost"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -57,25 +43,7 @@ jobs:
             sleep 1
           done
 
-      - name: List all running Docker containers
-        run: |
-          docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" > running_containers.txt
-          cat running_containers.txt  # Print all running containers with ID, Name, and Status
-
-
-      - name: Wait for rentitout-app-1 container to start
-        run: |
-          echo "Waiting for rentitout-app-1 container to start..."
-          until docker ps --filter "name=rentitout-app-1" | grep -q "rentitout-app-1"; do
-            echo "Container rentitout-app-1 is not running yet. Waiting..."
-            sleep 2
-          done
-          echo "Container rentitout-app-1 is now running."
-          
-      - name: List all running Docker containers
-        run: |
-          docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Status}}" > running_containers.txt
-          cat running_containers.txt  # Print all running containers with ID, Name, and Status
+     
       
       - name: Run tests
         run: |
