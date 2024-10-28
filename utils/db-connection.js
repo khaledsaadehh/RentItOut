@@ -22,18 +22,24 @@ con.connect( (err)=>{
 
          // Create 'users' table if not exists
   const createTableQuery = `
-  CREATE TABLE users (
-  id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  
+
+-- Table structure for table users
+CREATE TABLE users (
+  id INT(11) NOT NULL AUTO_INCREMENT,
   name VARCHAR(300) NOT NULL,
   email VARCHAR(300) NOT NULL UNIQUE,
   password VARCHAR(300) NOT NULL,
   phone_number VARCHAR(300) NOT NULL,
   address VARCHAR(300) NOT NULL,
-  role ENUM('user', 'admin') NOT NULL
+  is_verified TINYINT(1) NOT NULL,
+  role ENUM('user','admin') NOT NULL,
+  PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-  CREATE TABLE items (
-  id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+-- Table structure for table items
+CREATE TABLE items (
+  id INT(11) NOT NULL AUTO_INCREMENT,
   title VARCHAR(300) NOT NULL,
   description TEXT NOT NULL,
   category VARCHAR(300) NOT NULL,
@@ -42,156 +48,233 @@ con.connect( (err)=>{
   available_until DATE NOT NULL,
   user_id INT(11) NOT NULL,
   status VARCHAR(300) NOT NULL,
+  PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- Table structure for table rentals
 CREATE TABLE rentals (
-  id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  id INT(11) NOT NULL AUTO_INCREMENT,
   item_id INT(11) NOT NULL,
   user_id INT(11) NOT NULL,
   rental_start_date DATE NOT NULL,
   rental_end_date DATE NOT NULL,
   total_price DECIMAL(10,0) NOT NULL,
+  PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- Table structure for table damage_deposits
+CREATE TABLE damage_deposits (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  rental_id INT(11) NOT NULL,
+  desposit_amount DECIMAL(10,0) NOT NULL,
+  is_refund TINYINT(4) NOT NULL,
+  refund_date DATE NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (rental_id) REFERENCES rentals(id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Table structure for table insurance_plans
+CREATE TABLE insurance_plans (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  name VARCHAR(300) NOT NULL,
+  coverage_details TEXT NOT NULL,
+  premium DECIMAL(10,0) NOT NULL,
+  duration_days INT(11) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+-- Table structure for table logistics
 CREATE TABLE logistics (
-  id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  id INT(11) NOT NULL AUTO_INCREMENT,
   rental_id INT(11) NOT NULL,
   delivery_address VARCHAR(300) NOT NULL,
   pickup_date DATE NOT NULL,
   delivery_status VARCHAR(300) NOT NULL,
+  PRIMARY KEY (id),
   FOREIGN KEY (rental_id) REFERENCES rentals(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- Table structure for table payments
 CREATE TABLE payments (
-  id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  id INT(11) NOT NULL AUTO_INCREMENT,
   rental_id INT(11) NOT NULL,
   payment_date DATE NOT NULL,
   amount DECIMAL(10,0) NOT NULL,
+  PRIMARY KEY (id),
   FOREIGN KEY (rental_id) REFERENCES rentals(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- Table structure for table ratings
+CREATE TABLE ratings (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  item_id INT(11) NOT NULL,
+  reviewed_user_id INT(11) NOT NULL,
+  reviewing_user_id INT(11) NOT NULL,
+  rating INT(11) NOT NULL,
+  comment TEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (reviewed_user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (reviewing_user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- Table structure for table recent_views
+CREATE TABLE recent_views (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  user_id INT(11) NOT NULL,
+  item_id INT(11) NOT NULL,
+  viewed_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Table structure for table recommendations
+CREATE TABLE recommendations (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  user_id INT(11) NOT NULL,
+  item_id INT(11) NOT NULL,
+  recommendation_reason VARCHAR(300) NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+-- Table structure for table rental_insurance
+CREATE TABLE rental_insurance (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  rental_id INT(11) NOT NULL,
+  insurance_id INT(11) NOT NULL,
+  start_date DATE NOT NULL,
+  end_date DATE NOT NULL,
+  status VARCHAR(300) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (rental_id) REFERENCES rentals(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (insurance_id) REFERENCES insurance_plans(id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Table structure for table reviews
 CREATE TABLE reviews (
-  id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  id INT(11) NOT NULL AUTO_INCREMENT,
   item_id INT(11) NOT NULL,
   user_id INT(11) NOT NULL,
   rating INT(11) NOT NULL,
   comment TEXT NOT NULL,
+  PRIMARY KEY (id),
   FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- Table structure for table transaction_fees
+CREATE TABLE transaction_fees (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  rental_id INT(11) NOT NULL,
+  commission DECIMAL(11,0) NOT NULL,
+  service_fee DECIMAL(11,0) NOT NULL,
+  total_fee DECIMAL(11,0) NOT NULL,
+  date DATE NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (rental_id) REFERENCES rentals(id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Insert into users table
-INSERT INTO users (name, email, password, phone_number, address, role) VALUES
-('Alice Johnson', 'alice.johnson@example.com', 'hashed_password_1', '1234567890', '123 Main St', 'user'),
-('Bob Smith', 'bob.smith@example.com', 'hashed_password_2', '2345678901', '456 Oak St', 'user'),
-('Charlie Brown', 'charlie.brown@example.com', 'hashed_password_3', '3456789012', '789 Pine St', 'admin'),
-('Diana Prince', 'diana.prince@example.com', 'hashed_password_4', '4567890123', '321 Elm St', 'user'),
-('Edward Cullen', 'edward.cullen@example.com', 'hashed_password_5', '5678901234', '654 Maple St', 'user'),
-('Fiona Gallagher', 'fiona.gallagher@example.com', 'hashed_password_6', '6789012345', '987 Cedar St', 'user'),
-('George Harrison', 'george.harrison@example.com', 'hashed_password_7', '7890123456', '321 Oak St', 'user'),
-('Harry Potter', 'harry.potter@example.com', 'hashed_password_8', '8901234567', '456 Elm St', 'user'),
-('Ivy Green', 'ivy.green@example.com', 'hashed_password_9', '9012345678', '789 Maple St', 'admin'),
-('Jack Black', 'jack.black@example.com', 'hashed_password_10', '1234567899', '123 Pine St', 'user'),
-('Karen White', 'karen.white@example.com', 'hashed_password_11', '2345678902', '456 Cedar St', 'user'),
-('Leo Blue', 'leo.blue@example.com', 'hashed_password_12', '3456789013', '789 Birch St', 'user'),
-('Mona Lisa', 'mona.lisa@example.com', 'hashed_password_13', '4567890124', '321 Maple St', 'admin'),
-('Nina Purple', 'nina.purple@example.com', 'hashed_password_14', '5678901235', '654 Oak St', 'user'),
-('Oscar Green', 'oscar.green@example.com', 'hashed_password_15', '6789012346', '987 Elm St', 'user');
+-- Inserting mock data into the users table
+INSERT INTO users (name, email, password, phone_number, address, is_verified, role) VALUES
+('John Doe', 'john.doe@example.com', 'password123', '1234567890', '123 Elm St, Springfield', 1, 'user'),
+('Jane Smith', 'jane.smith@example.com', 'password456', '0987654321', '456 Oak St, Springfield', 1, 'user'),
+('Alice Johnson', 'alice.johnson@example.com', 'password789', '5551234567', '789 Pine St, Springfield', 1, 'admin'),
+('Bob Brown', 'bob.brown@example.com', 'password012', '5557654321', '321 Maple St, Springfield', 1, 'user');
 
--- Insert into items table
+-- Inserting mock data into the items table
 INSERT INTO items (title, description, category, rental_price, available_from, available_until, user_id, status) VALUES
-('Bicycle', 'Mountain bike in great condition.', 'Sports', 15, '2024-01-01', '2024-12-31', 1, 'available'),
-('Camera', 'DSLR camera with lenses.', 'Electronics', 25, '2024-01-01', '2024-12-31', 2, 'available'),
-('Tent', 'Camping tent for 4 people.', 'Outdoors', 10, '2024-01-01', '2024-12-31', 3, 'rented'),
-('Laptop', '15-inch laptop, perfect for work.', 'Electronics', 30, '2024-01-01', '2024-12-31', 4, 'available'),
-('Guitar', 'Acoustic guitar, ideal for beginners.', 'Music', 8, '2024-01-01', '2024-12-31', 5, 'available'),
-('Projector', 'HD projector with HDMI support.', 'Electronics', 20, '2024-01-01', '2024-12-31', 6, 'rented'),
-('Kayak', 'Single person kayak for lake use.', 'Sports', 18, '2024-01-01', '2024-12-31', 7, 'available'),
-('Sewing Machine', 'Easy-to-use sewing machine.', 'Appliances', 12, '2024-01-01', '2024-12-31', 8, 'available'),
-('Drill', 'Cordless drill with charger.', 'Tools', 7, '2024-01-01', '2024-12-31', 9, 'rented'),
-('Keyboard', 'Mechanical keyboard for gaming.', 'Electronics', 10, '2024-01-01', '2024-12-31', 10, 'available'),
-('Bike Helmet', 'Safety helmet for cycling.', 'Sports', 5, '2024-01-01', '2024-12-31', 11, 'available'),
-('BBQ Grill', 'Portable BBQ grill.', 'Outdoors', 12, '2024-01-01', '2024-12-31', 12, 'available'),
-('Tablet', '10-inch tablet with WiFi.', 'Electronics', 18, '2024-01-01', '2024-12-31', 13, 'rented'),
-('Telescope', 'Compact telescope for stargazing.', 'Optics', 20, '2024-01-01', '2024-12-31', 14, 'available'),
-('Sleeping Bag', 'Sleeping bag for cold weather.', 'Outdoors', 8, '2024-01-01', '2024-12-31', 15, 'available');
+('Lawn Mower', 'High power lawn mower', 'Gardening Equipment', 50, '2024-01-01', '2024-06-01', 1, 'available'),
+('Power Drill', 'Cordless power drill', 'Tools', 30, '2024-02-01', '2024-05-01', 2, 'available'),
+('Tent', '4-person camping tent', 'Camping Gear', 20, '2024-03-01', '2024-09-01', 1, 'available'),
+('Bicycle', 'Mountain bike for rent', 'Sports Equipment', 15, '2024-01-15', '2024-08-15', 3, 'available');
 
--- Insert into rentals table
+-- Inserting mock data into the rentals table
 INSERT INTO rentals (item_id, user_id, rental_start_date, rental_end_date, total_price) VALUES
-(1, 2, '2024-06-01', '2024-06-10', 150),
-(2, 3, '2024-05-05', '2024-05-12', 175),
-(3, 4, '2024-04-15', '2024-04-20', 50),
-(4, 5, '2024-07-01', '2024-07-07', 210),
-(5, 6, '2024-03-20', '2024-03-27', 56),
-(6, 7, '2024-08-08', '2024-08-12', 80),
-(7, 8, '2024-09-01', '2024-09-10', 162),
-(8, 9, '2024-02-11', '2024-02-18', 84),
-(9, 10, '2024-10-01', '2024-10-05', 35),
-(10, 11, '2024-06-15', '2024-06-22', 70),
-(11, 12, '2024-07-20', '2024-07-27', 35),
-(12, 13, '2024-08-05', '2024-08-10', 84),
-(13, 14, '2024-09-11', '2024-09-18', 126),
-(14, 15, '2024-05-06', '2024-05-13', 140),
-(15, 1, '2024-10-15', '2024-10-22', 56);
+(1, 1, '2024-03-01', '2024-03-10', 500),
+(2, 2, '2024-02-05', '2024-02-12', 210),
+(3, 1, '2024-04-01', '2024-04-05', 100),
+(4, 3, '2024-07-01', '2024-07-15', 225);
 
--- Insert into logistics table
+-- Inserting mock data into the damage_deposits table
+INSERT INTO damage_deposits (rental_id, desposit_amount, is_refund, refund_date) VALUES
+(1, 100, 0, '2024-03-11'),
+(2, 50, 1, '2024-02-15'),
+(3, 75, 1, '2024-04-06'),
+(4, 120, 0, '2024-07-16');
+
+-- Inserting mock data into the insurance_plans table
+INSERT INTO insurance_plans (name, coverage_details, premium, duration_days) VALUES
+('Basic Coverage', 'Covers basic damages', 20, 30),
+('Extended Coverage', 'Covers full damages', 50, 60),
+('Theft Protection', 'Covers theft', 30, 30);
+
+-- Inserting mock data into the logistics table
 INSERT INTO logistics (rental_id, delivery_address, pickup_date, delivery_status) VALUES
-(1, '123 Main St', '2024-06-11', 'Delivered'),
-(2, '456 Oak St', '2024-05-13', 'In Transit'),
-(3, '789 Pine St', '2024-04-21', 'Delivered'),
-(4, '321 Elm St', '2024-07-08', 'Scheduled'),
-(5, '654 Maple St', '2024-03-28', 'Delivered'),
-(6, '987 Cedar St', '2024-08-13', 'In Transit'),
-(7, '321 Oak St', '2024-09-11', 'Scheduled'),
-(8, '456 Elm St', '2024-02-19', 'Delivered'),
-(9, '789 Maple St', '2024-10-06', 'In Transit'),
-(10, '123 Pine St', '2024-06-23', 'Delivered'),
-(11, '456 Cedar St', '2024-07-28', 'Scheduled'),
-(12, '789 Birch St', '2024-08-11', 'Delivered'),
-(13, '321 Maple St', '2024-09-19', 'In Transit'),
-(14, '654 Oak St', '2024-05-14', 'Delivered'),
-(15, '987 Elm St', '2024-10-23', 'Scheduled');
+(1, '123 Elm St, Springfield', '2024-03-01', 'delivered'),
+(2, '456 Oak St, Springfield', '2024-02-05', 'pending'),
+(3, '789 Pine St, Springfield', '2024-04-01', 'delivered'),
+(4, '321 Maple St, Springfield', '2024-07-01', 'in transit');
 
--- Insert into payments table
+-- Inserting mock data into the payments table
 INSERT INTO payments (rental_id, payment_date, amount) VALUES
-(1, '2024-06-02', 150),
-(2, '2024-05-06', 175),
-(3, '2024-04-16', 50),
-(4, '2024-07-02', 210),
-(5, '2024-03-21', 56),
-(6, '2024-08-09', 80),
-(7, '2024-09-02', 162),
-(8, '2024-02-12', 84),
-(9, '2024-10-02', 35),
-(10, '2024-06-16', 70),
-(11, '2024-07-21', 35),
-(12, '2024-08-06', 84),
-(13, '2024-09-12', 126),
-(14, '2024-05-07', 140),
-(15, '2024-10-16', 56);
+(1, '2024-03-01', 500),
+(2, '2024-02-05', 210),
+(3, '2024-04-01', 100),
+(4, '2024-07-01', 225);
 
--- Insert into reviews table
+-- Inserting mock data into the ratings table
+INSERT INTO ratings (item_id, reviewed_user_id, reviewing_user_id, rating, comment) VALUES
+(1, 1, 2, 5, 'Great quality!'),
+(2, 2, 1, 4, 'Good product but expensive.'),
+(3, 1, 3, 5, 'Loved it! Very spacious.'),
+(4, 3, 1, 3, 'Not bad but could be better.');
+
+-- Inserting mock data into the recent_views table
+INSERT INTO recent_views (user_id, item_id, viewed_at) VALUES
+(1, 1, NOW()),
+(2, 2, NOW()),
+(1, 3, NOW()),
+(3, 4, NOW());
+
+-- Inserting mock data into the recommendations table
+INSERT INTO recommendations (user_id, item_id, recommendation_reason, created_at) VALUES
+(1, 2, 'Affordable and reliable.', NOW()),
+(2, 1, 'Highly rated by users.', NOW()),
+(3, 3, 'Perfect for camping.', NOW()),
+(1, 4, 'Good for outdoor activities.', NOW());
+
+-- Inserting mock data into the rental_insurance table
+INSERT INTO rental_insurance (rental_id, insurance_id, start_date, end_date, status) VALUES
+(1, 1, '2024-03-01', '2024-03-10', 'active'),
+(2, 2, '2024-02-05', '2024-02-12', 'inactive'),
+(3, 3, '2024-04-01', '2024-04-05', 'active'),
+(4, 1, '2024-07-01', '2024-07-15', 'active');
+
+-- Inserting mock data into the reviews table
 INSERT INTO reviews (item_id, user_id, rating, comment) VALUES
-(1, 2, 5, 'Great bicycle, very smooth ride!'),
-(2, 3, 4, 'Camera worked well, good quality pictures.'),
-(3, 4, 3, 'Tent was fine but a bit cramped for 4 people.'),
-(4, 5, 5, 'Perfect laptop for work, very fast.'),
-(5, 6, 4, 'Guitar sounds great, nice for practice.'),
-(6, 7, 5, 'Projector was fantastic for movie night!'),
-(7, 8, 4, 'Kayak was stable and easy to use.'),
-(8, 9, 3, 'Sewing machine works well but a bit noisy.'),
-(9, 10, 5, 'Drill is powerful, good for small projects.'),
-(10, 11, 4, 'Keyboard is comfortable to type on.'),
-(11, 12, 4, 'Helmet is solid and safe.'),
-(12, 13, 5, 'BBQ grill made cooking easy.'),
-(13, 14, 4, 'Tablet was good for browsing and streaming.'),
-(14, 15, 5, 'Telescope was clear, nice for beginners.'),
-(15, 1, 3, 'Sleeping bag was warm, but a bit narrow.');
+(1, 1, 5, 'Excellent experience!'),
+(2, 2, 4, 'Satisfactory.'),
+(3, 3, 5, 'Loved it! Perfect for my needs.'),
+(4, 1, 3, 'Okay, but had some issues.');
+
+-- Inserting mock data into the transaction_fees table
+INSERT INTO transaction_fees (rental_id, commission, service_fee, total_fee, date) VALUES
+(1, 50, 5, 55, '2024-03-01'),
+(2, 20, 2, 22, '2024-02-05'),
+(3, 10, 1, 11, '2024-04-01'),
+(4, 30, 3, 33, '2024-07-01');
+
+
 
   
     `;
