@@ -64,6 +64,8 @@ jobs:
       - name: Log in to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
+      - name: Tag the Docker image
+        run: docker tag rentitproject-app khaledo/rentitout:latest
 
       - name: Upload Docker Image to Docker Hub
         # if: github.event_name == 'push' && github.ref == 'refs/heads/main'
