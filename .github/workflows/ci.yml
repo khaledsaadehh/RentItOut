@@ -1,9 +1,9 @@
-name: CI/CD Pipeline
+name: CI Pipeline
 
 on:
   push:
     branches:
-      - main  # Change this to your default branch if different
+      - main
   pull_request:
     branches:
       - main
@@ -12,42 +12,55 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      mysqldb:
+        image: mysql:8.0.33
+        env:
+          MYSQL_DATABASE: rentitout
+          MYSQL_ROOT_PASSWORD: rentitout
+        ports:
+          - 3307:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Check out the repository
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: 18
+
+      - name: Cache Node modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Install dependencies
+        run: npm install
+
+      - name: Build and test Docker container
         run: |
-          npm install -g nodemon
-          npm install
+          docker-compose -f docker-compose.yml up -d
+          sleep 20  # Allow MySQL to fully initialize
+          docker-compose exec app npm run test  # Replace with your test command
 
-      - name: Install Docker Compose
-        run: |
-          sudo curl -L "https://github.com/docker/compose/releases/download/$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep -Po '"tag_name": "\K.*\d')" -o /usr/local/bin/docker-compose
-          sudo chmod +x /usr/local/bin/docker-compose
-        shell: bash
-
-
-      - name: Build & Run Docker Compose
-        run: docker compose up -d --build
-
-      - name: Wait for MySQL to be ready
-        run: |
-          echo "Waiting for MySQL to be ready..."
-          while ! mysql -h127.0.0.1 -P3308 -uroot -prentitout -e "SELECT 1"; do
-            sleep 1
-          done
-
-     
-      
-      - name: Run tests
-        run: |
-          docker exec rentitout-app-1 npm test  # Make sure you have a test script in package.json
-
-      - name: Shut down Docker Compose
+      - name: Stop and remove containers
+        if: always()
         run: docker-compose down
+
+      - name: Upload Docker Image to GitHub Container Registry
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ github.repository }}:latest
