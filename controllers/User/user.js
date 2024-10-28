@@ -112,7 +112,7 @@ const getAdminData = (req, res) => {
 
 
 const register = async (req, res) => {
-  const { UserID ,Username, Email, address, phoneNumber, Password, Role } = req.body;
+  const { UserID ,Username, Email, address, phoneNumber, isVerified, Password, Role } = req.body;
 
   User.addUser(req.body, res, (err, data) => {
     if (err) {

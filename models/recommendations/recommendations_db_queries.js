@@ -1,4 +1,5 @@
 const db = require('../../utils/db-connection');
+const logger = require('../../utils/logger'); // Adjust the path if necessary
 
 const Recommendation = {};
 
@@ -6,54 +7,55 @@ const Recommendation = {};
 Recommendation.addRecommendation = (newRecommendation, result) => {
     db.query('INSERT INTO recommendations SET ?', newRecommendation, (err, res) => {
         if (err) {
-            console.log(err);
+            logger.error(`Error adding Recommendation: ${err.message}`, { error: err });
             result(err, null);
             return;
         }
+        logger.info('New Recommendation added successfully', { newRecommendation });
         result(null, { ...newRecommendation });
     });
 };
-
 
 // Get the list of all recommendations
 Recommendation.getRecommendationsList = (result) => {
     db.query('SELECT * FROM recommendations', (err, res) => {
         if (err) {
-            console.log(err);
+            logger.error(`Error fetching Recommendations list: ${err.message}`, { error: err });
             result(err, null);
             return;
         }
+        logger.info('Fetched Recommendations list successfully');
         result(null, res);
     });
 };
 
-
-// Get the list of recommendations by RecommendationID
+// Get Recommendation by ID
 Recommendation.getRecommendationById = (RecommendationID, result) => {
     db.query('SELECT * FROM recommendations WHERE id = ?', [RecommendationID], (err, res) => {
         if (err) {
-            console.log(err);
+            logger.error(`Error fetching Recommendation with ID ${RecommendationID}: ${err.message}`, { error: err });
             result(err, null);
             return;
         }
+        logger.info(`Fetched Recommendation by ID ${RecommendationID} successfully`);
         result(null, res);
     });
 };
 
-
-// Update an recommendation
+// Update a Recommendation
 Recommendation.updateRecommendation = (RecommendationID, Data, result) => {
-        db.query('SELECT * FROM recommendations WHERE id = ?', [RecommendationID], (err, res) => {
+    db.query('SELECT * FROM recommendations WHERE id = ?', [RecommendationID], (err, res) => {
         if (err) {
-            console.log(err);
+            logger.error(`Error finding Recommendation with ID ${RecommendationID} for update: ${err.message}`, { error: err });
             result(err, null);
             return;
         }
         if (res.length === 0) {
+            logger.warn(`Recommendation with ID ${RecommendationID} not found for update`);
             result({ kind: "not_found" }, null);
             return;
         }
-        
+
         let updateQuery = 'UPDATE recommendations SET ';
         let updateData = [];
         Object.keys(Data).forEach((key, index) => {
@@ -67,27 +69,28 @@ Recommendation.updateRecommendation = (RecommendationID, Data, result) => {
         });
         updateQuery += ' WHERE id = ?';
         updateData.push(RecommendationID);
-        
+
         db.query(updateQuery, updateData, (err, res) => {
             if (err) {
-                console.error('Error updating record:', err);
+                logger.error(`Error updating Recommendation with ID ${RecommendationID}: ${err.message}`, { error: err });
                 result(err, null);
                 return;
             }
-            console.log('Record updated successfully');
+            logger.info(`Updated Recommendation with ID ${RecommendationID} successfully`, { Data });
             result(null, res);
         });
     });
 };
 
-// Delete an recommendations
+// Delete a Recommendation
 Recommendation.deleteRecommendation = (RecommendationID, result) => {
     db.query('DELETE FROM recommendations WHERE id = ?', [RecommendationID], (err, res) => {
         if (err) {
-            console.log(err);
+            logger.error(`Error deleting Recommendation with ID ${RecommendationID}: ${err.message}`, { error: err });
             result(err, null);
             return;
         }
+        logger.info(`Deleted Recommendation with ID ${RecommendationID} successfully`);
         result(null, res);
     });
 };
