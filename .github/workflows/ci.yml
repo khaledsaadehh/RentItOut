@@ -62,6 +62,14 @@ jobs:
           docker ps --format "{{.Names}}" > container_names.txt
           cat container_names.txt  # This will print the container names from the file
 
+      - name: Wait for rentitout-app-1 container to start
+        run: |
+          echo "Waiting for rentitout-app-1 container to start..."
+          until docker ps --filter "name=rentitout-app-1" | grep -q "rentitout-app-1"; do
+            echo "Container rentitout-app-1 is not running yet. Waiting..."
+            sleep 2
+          done
+          echo "Container rentitout-app-1 is now running."
 
       - name: Run tests
         run: |
