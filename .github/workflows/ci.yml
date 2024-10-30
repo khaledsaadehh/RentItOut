@@ -64,6 +64,9 @@ jobs:
       - name: List Docker Images
         run: docker images  # Check available images 
 
+      - name: Tag a specific docker
+        run: docker tag rentitout_app:latest khaledo/rentitout_app:latest
+
       - name: Upload Docker Image to Docker Hub
         # if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: docker push khaledo/rentitout_app:latest
