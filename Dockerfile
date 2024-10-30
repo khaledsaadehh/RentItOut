@@ -31,4 +31,4 @@ RUN dos2unix ./middlewares/roleMiddleware.js
 EXPOSE 3000
 
 # Start the app
-CMD ["wait-for-it.sh", "mysqldb:3306", "--", "npm", "run", "start"]
+CMD ["bash", "-c", "/usr/local/bin/wait-for-it.sh mysqldb:3306 -- echo 'Database is ready!' && npm run start"]
