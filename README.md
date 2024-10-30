@@ -11,6 +11,8 @@
 * JWT Authentication & Authorization
 * API Testing & Documentation with Postman
 * Nodemon for hot reloaded
+* DockerHub
+* Github Actions
 
 ## Steps
 ### Via CMD
