@@ -68,7 +68,7 @@ jobs:
       - name: Tag the Docker image
         run: docker tag rentitout-app khaledo/rentitout:latest
 
-        - name: List Docker Images
+      - name: List Docker Images
         run: docker images  # Check available images 
 
       - name: Upload Docker Image to Docker Hub
